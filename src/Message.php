@@ -38,7 +38,7 @@ class Message
     * @throws Exception if $support is 'cookies' and $this->cookieBuilder has not been set
     * @throws DomainException if $support is not handled
     */
-    function saveMessage($support,$category,$message)
+    function save($support,$category,$message)
     {
         switch($support) {
             case 'cookies':
