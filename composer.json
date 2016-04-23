@@ -1,0 +1,25 @@
+{
+    "name": "phpcraft/message",
+    "type": "library",
+    "description": "application messages library",
+    "license": "MIT",
+    "authors": [
+	{
+            "name": "vuk"
+	}
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/vukbgit/PHPCraft.Cookie"
+        }
+    ],
+    "require": {
+            "phpcraft/cookie": "dev-master"
+    },
+    "autoload": {
+        "psr-4" : {
+            "PHPCraft\\Message\\" : "src/"
+        }
+    }
+}
