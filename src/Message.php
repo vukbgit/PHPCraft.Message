@@ -42,7 +42,7 @@ class Message
     {
         switch($support) {
             case 'cookies':
-                if(!$this->cookieBuilder) throw new Exception('cookieBuilder must be set');
+                if(!$this->cookieBuilder) throw new \Exception('cookieBuilder must be set');
                 $messages = (array) json_decode($this->cookieBuilder->get('messages'));
                 if(!$messages) $messages = array();
                 if(!isset($messages[$category])) $messages[$category] = array();
