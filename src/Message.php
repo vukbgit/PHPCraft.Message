@@ -21,7 +21,7 @@ class Message
     }
 
     /**
-    * sets optional dependency for cookies support
+    * Sets optional dependency for cookies support
     *
     * @param PHPCraft\Cookie\CookieBuilderInterface $cookieBuilder
     */
@@ -31,7 +31,7 @@ class Message
     }
     
     /**
-    * saves a message
+    * Saves a message
     *
     * @param string $support: support to save message to, so far only 'cookies'
     * @param string $category: used to index message; for example Bootstrap contextual background helper classes (http://getbootstrap.com/css/#helper-classes-backgrounds) may be used for template benefit 
