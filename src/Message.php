@@ -25,7 +25,7 @@ class Message
     *
     * @param PHPCraft\Cookie\CookieBuilderInterface $cookieBuilder
     */
-    public function setCookieBuilder(CookieBuilderInterface $cookieBuilder)
+    public function setCookieBuilder(PHPCraft\Cookie\CookieBuilderInterface $cookieBuilder)
     {
         $this->cookieBuilder = $cookieBuilder;
     }
