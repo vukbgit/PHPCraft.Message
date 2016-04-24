@@ -62,7 +62,7 @@ class Message
     * @throws DomainException if $support is not handled
     * @return array of messages indexed by categories
     */
-    function getMessages($support)
+    function getAll($support)
     {
         switch($support) {
             case 'cookies':
