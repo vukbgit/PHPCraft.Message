@@ -47,7 +47,7 @@ class Message
                 if(!$messages) $messages = array();
                 if(!isset($messages[$category])) $messages[$category] = array();
                 $messages[$category][] = $message;
-                $this->cookieBuilder->set('messages', json_encode($messages), false, COOKIE_HTTPONLY);
+                $this->cookieBuilder->set('messages', json_encode($messages));
             break;
             default:
                 throw new DomainException(sprintf('Unknown support \'%s\' for message: %s',$support,$message));
