@@ -9,7 +9,7 @@
 	}
     ],
     "require": {
-            "phpcraft/cookie": "1.*"
+            "phpcraft/cookie": "dev-master"
     },
     "autoload": {
         "psr-4" : {
