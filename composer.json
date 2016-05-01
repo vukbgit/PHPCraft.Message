@@ -8,12 +8,6 @@
             "name": "vuk"
 	}
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/vukbgit/PHPCraft.Cookie"
-        }
-    ],
     "require": {
             "phpcraft/cookie": "1.*"
     },
