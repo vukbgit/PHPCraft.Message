@@ -12,6 +12,7 @@ use PHPCraft\Cookie;
 class Message
 {
     private $cookieBuilder;
+    private $innerMessages;
 
     /**
      * Constructor.
@@ -41,6 +42,11 @@ class Message
     function save($support,$category,$message)
     {
         switch($support) {
+            case 'inner':
+                if(!$this->innerMessages) $this->innerMessages = array();
+                if(!isset($this->innerMessages[$category])) $this->innerMessages[$category] = array(); 
+                $this->innerMessages[$category][] = $message;
+            break;
             case 'cookies':
                 if(!$this->cookieBuilder) throw new \Exception('cookieBuilder must be set');
                 $messages = (array) json_decode($this->cookieBuilder->get('messages'));
@@ -58,16 +64,22 @@ class Message
     /**
     * gets all of messages and deletes them from support
     *
-    * @param string $support: support messages are saved to, so far only cookies
+    * @param string $support: support messages are saved to, if not specified messages on all of implementd supports are retrieved
     * @throws DomainException if $support is not handled
     * @return array of messages indexed by categories
     */
-    function get($support)
+    function get($support = false)
     {
         switch($support) {
+            case 'inner':
+                $messages = (array) $this->innerMessages;
+            break;
             case 'cookies':
                 $messages = (array) json_decode($this->cookieBuilder->get('messages'));
                 $this->cookieBuilder->delete('messages');
+            break;
+            case false:
+                $messages = array_merge_recursive($this->get('inner'), $this->get('cookies'));
             break;
             default:
                 throw new DomainException(sprintf('Unknown required support \'%s\' while getting messages',$support));
