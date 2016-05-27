@@ -11,7 +11,7 @@ use PHPCraft\Cookie;
  */
 class Message
 {
-    private $cookieBuilder;
+    private $cookie;
     private $innerMessages;
 
     /**
@@ -24,11 +24,11 @@ class Message
     /**
     * Sets optional dependency for cookies support
     *
-    * @param PHPCraft\Cookie\CookieBuilderInterface $cookieBuilder
+    * @param PHPCraft\Cookie\CookieInterface $cookie
     */
-    public function setCookieBuilder(\PHPCraft\Cookie\CookieBuilderInterface $cookieBuilder)
+    public function setCookie(\PHPCraft\Cookie\CookieInterface $cookie)
     {
-        $this->cookieBuilder = $cookieBuilder;
+        $this->cookie = $cookie;
     }
     
     /**
@@ -36,7 +36,7 @@ class Message
     *
     * @param string $support: support to save message to, so far only 'cookies'
     * @param string $category: used to index message; for example Bootstrap contextual background helper classes (http://getbootstrap.com/css/#helper-classes-backgrounds) may be used for template benefit 
-    * @throws Exception if $support is 'cookies' and $this->cookieBuilder has not been set
+    * @throws Exception if $support is 'cookies' and $this->cookie has not been set
     * @throws DomainException if $support is not handled
     */
     function save($support,$category,$message)
@@ -48,12 +48,12 @@ class Message
                 $this->innerMessages[$category][] = $message;
             break;
             case 'cookies':
-                if(!$this->cookieBuilder) throw new \Exception('cookieBuilder must be set');
-                $messages = (array) json_decode($this->cookieBuilder->get('messages'));
+                if(!$this->cookie) throw new \Exception('cookie must be set');
+                $messages = (array) json_decode($this->cookie->get('messages'));
                 if(!$messages) $messages = array();
                 if(!isset($messages[$category])) $messages[$category] = array();
                 $messages[$category][] = $message;
-                $this->cookieBuilder->set('messages', json_encode($messages));
+                $this->cookie->set('messages', json_encode($messages));
             break;
             default:
                 throw new DomainException(sprintf('Unknown support \'%s\' for message: %s',$support,$message));
@@ -75,8 +75,8 @@ class Message
                 $messages = (array) $this->innerMessages;
             break;
             case 'cookies':
-                $messages = (array) json_decode($this->cookieBuilder->get('messages'));
-                $this->cookieBuilder->delete('messages');
+                $messages = (array) json_decode($this->cookie->get('messages'));
+                $this->cookie->delete('messages');
             break;
             case false:
                 $messages = array_merge_recursive($this->get('inner'), $this->get('cookies'));
