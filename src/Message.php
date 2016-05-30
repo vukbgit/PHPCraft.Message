@@ -64,7 +64,7 @@ class Message
     }
     
     /**
-    * gets all of messages and deletes them from support
+    * gets all of messages
     *
     * @param string $support: support messages are saved to, if not specified messages on all of implementd supports are retrieved
     * @throws DomainException if $support is not handled
@@ -88,5 +88,27 @@ class Message
             break;
         }
         return $messages;
+    }
+    
+    /**
+    * clears all of messages from support
+    *
+    * @param string $support: support messages are saved to, if not specified messages on all of implementd supports are retrieved
+    * @throws DomainException if $support is not handled
+    * @return mixed, depending on support:
+    *                   cookies: Psr\Http\Message\ResponseInterface implementation object modified by cookie addition
+    */
+    function clear($support = false)
+    {
+        switch($support) {
+            case 'inner':
+            break;
+            case 'cookies':
+                return $this->cookie->delete('messages');
+            break;
+            default:
+                throw new DomainException(sprintf('Unknown required support \'%s\' while clearing messages',$support));
+            break;
+        }
     }
 }
