@@ -28,7 +28,7 @@ class Message
     */
     public function setCookie(\PHPCraft\Cookie\CookieInterface $cookie)
     {
-        $this->cookie = $cookie;
+        $this->cookie =& $cookie;
     }
     
     /**
