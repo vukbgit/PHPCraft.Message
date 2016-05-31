@@ -38,8 +38,6 @@ class Message
     * @param string $category: used to index message; for example Bootstrap contextual background helper classes (http://getbootstrap.com/css/#helper-classes-backgrounds) may be used for template benefit 
     * @throws Exception if $support is 'cookies' and $this->cookie has not been set
     * @throws DomainException if $support is not handled
-    * @return mixed, depending on support:
-    *                   cookies: Psr\Http\Message\ResponseInterface implementation object modified by cookie addition
     */
     function save($support,$category,$message)
     {
@@ -55,7 +53,7 @@ class Message
                 if(!$messages) $messages = array();
                 if(!isset($messages[$category])) $messages[$category] = array();
                 $messages[$category][] = $message;
-                return $this->cookie->set('messages', json_encode($messages));
+                $this->cookie->set('messages', json_encode($messages));
             break;
             default:
                 throw new DomainException(sprintf('Unknown support \'%s\' for message: %s',$support,$message));
@@ -95,8 +93,6 @@ class Message
     *
     * @param string $support: support messages are saved to, if not specified messages on all of implementd supports are retrieved
     * @throws DomainException if $support is not handled
-    * @return mixed, depending on support:
-    *                   cookies: Psr\Http\Message\ResponseInterface implementation object modified by cookie addition
     */
     function clear($support = false)
     {
@@ -104,7 +100,7 @@ class Message
             case 'inner':
             break;
             case 'cookies':
-                return $this->cookie->delete('messages');
+                $this->cookie->delete('messages');
             break;
             default:
                 throw new DomainException(sprintf('Unknown required support \'%s\' while clearing messages',$support));
