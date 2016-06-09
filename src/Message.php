@@ -26,7 +26,7 @@ class Message
     *
     * @param PHPCraft\Cookie\CookieInterface $cookie
     */
-    public function setCookie(\PHPCraft\Cookie\CookieInterface $cookie)
+    public function setCookie(\PHPCraft\Cookie\CookieInterface &$cookie)
     {
         $this->cookie =& $cookie;
     }
@@ -76,7 +76,6 @@ class Message
             break;
             case 'cookies':
                 $messages = (array) json_decode($this->cookie->get('messages'));
-                $this->cookie->delete('messages');
             break;
             case false:
                 $messages = array_merge_recursive($this->get('inner'), $this->get('cookies'));
@@ -84,6 +83,9 @@ class Message
             default:
                 throw new DomainException(sprintf('Unknown required support \'%s\' while getting messages',$support));
             break;
+        }
+        if($messages) {
+            $this->clear($support);
         }
         return $messages;
     }
