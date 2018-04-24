@@ -48,10 +48,16 @@ class Message
                 $this->innerMessages[$category][] = $message;
             break;
             case 'cookies':
-                if(!$this->cookie) throw new \Exception('cookie must be set');
+                if(!$this->cookie) {
+                    throw new \Exception('cookie must be set');
+                }
                 $messages = (array) json_decode($this->cookie->get('messages'));
-                if(!$messages) $messages = array();
-                if(!isset($messages[$category])) $messages[$category] = array();
+                if(!$messages) {
+                    $messages = array();
+                }
+                if(!isset($messages[$category])) {
+                    $messages[$category] = array();
+                }
                 $messages[$category][] = $message;
                 $this->cookie->set('messages', json_encode($messages));
             break;
